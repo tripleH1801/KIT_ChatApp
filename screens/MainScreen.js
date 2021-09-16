@@ -3,6 +3,7 @@ import React from 'react'
 import { View, Text, StyleSheet, LogBox } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import ListChatRooms from '../components/ListChatRooms'
+import HeaderSearchBar from './HeaderSearchBar'
 
 const MainScreen = () => {
     LogBox.ignoreLogs([
@@ -11,6 +12,7 @@ const MainScreen = () => {
     return (
         <ScrollView style={styles.container}>
             <StatusBar barStyle={'light-content'} />
+            <HeaderSearchBar/>
             <ListChatRooms/>
         </ScrollView>
     )

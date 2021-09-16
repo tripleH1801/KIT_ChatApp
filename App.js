@@ -8,6 +8,11 @@ import { responsiveFontSize, responsiveHeight } from 'react-native-responsive-di
 import { AuthContext } from './context/Context'
 
 import MainTab from './screens/MainTab';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import ProfileUserScreen from './screens/ProfileUserScreen';
+import AccountSettingScreen from './screens/AccountSettingScreen'
+import ProfileSettingScreen from './screens/ProfileSettingScreen';
 
 const Stack = createStackNavigator();
 
@@ -30,8 +35,53 @@ export default function App() {
                 headerShown: false
               })
             }
-            name='Main'
+            name='MainTab'
             component={MainTab}
+          />
+          <Stack.Screen
+            options={
+              ({ navigation }) => ({
+                headerShown: false
+              })
+            }
+            name='LoginScreen'
+            component={LoginScreen}
+          />
+          <Stack.Screen
+            options={
+              ({ navigation }) => ({
+                headerShown: false
+              })
+            }
+            name='RegisterScreen'
+            component={RegisterScreen}
+          />
+          <Stack.Screen
+            options={
+              ({ navigation }) => ({
+                title:'Thông tin cá nhân'
+              })
+            }
+            name='ProfileScreen'
+            component={ProfileUserScreen}
+          />
+          <Stack.Screen
+            options={
+              ({ navigation }) => ({
+                title:'Cài đặt tài khoản'
+              })
+            }
+            name='AccountSettingScreen'
+            component={AccountSettingScreen}
+          />
+          <Stack.Screen
+            options={
+              ({ navigation }) => ({
+                title:'Thay đổi thông tin cá nhân'
+              })
+            }
+            name='ProfileSettingScreen'
+            component={ProfileSettingScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>
