@@ -1,12 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { responsiveFontSize, responsiveHeight } from 'react-native-responsive-dimensions';
-import ChatScreen from './screens/ChatScreen';
-import ContactScreen from './screens/ContactScreen';
+
 import { AuthContext } from './context/Context'
+
+import MainTab from './screens/MainTab';
 
 import {
   Ionicons,
@@ -14,7 +15,7 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
 
@@ -28,53 +29,46 @@ export default function App() {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarActiveTintColor: '#2e89ff',
-            tabBarInactiveTintColor: '#5f5f5f',
-            tabBarIndicator: () => null,
-            tabBarStyle: {
-              marginVertical: 0,
-              paddingTop: 5
-            },
-            tabBarLabelStyle: styles.tabBarLabel,
-            tabBarIconStyle: styles.tabBarIcon,
-          })}
-        >
-          <Tab.Screen
-            options={{
-              title: 'Chat',
-              tabBarIcon: ({ color: color }) => <Ionicons name="chatbubble" size={21} color={color} />,
+        <Stack.Navigator>
+          <Stack.Screen
+            options={
+              ({ navigation }) => ({
+                headerStyle: {
+                  backgroundColor: '#000',
+                },
+                title: 'Chat',
+                headerTitleStyle: {
+                  fontSize: responsiveFontSize(3),
+                  fontWeight: '600',
+                  color: '#fff',
+                },
+                headerLeft: () => {
+                  return (
+                    <Image
+                      source={{
+                        uri: 'https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/225547917_1543387726011430_4693817264036487598_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=NxIAIrC0VHAAX9OqcI8&_nc_ht=scontent.fvca1-1.fna&oh=2bba06ee61238b9ab640dcef489b8e4a&oe=614ADF7E'
+                      }}
+                      style={{
+                        width: responsiveHeight(4.5),
+                        height: responsiveHeight(4.5),
+                        borderRadius: responsiveHeight(5),
+                      }}
+                    />
+                  )
+                },
+                headerLeftContainerStyle: {
+                  marginLeft: responsiveHeight(1.8),
+                },
+                // headerRight: () => {
+                //   return <HeaderRight />
+                // },
+              })
 
-            }}
-            name="Chat"
-            component={ChatScreen}
+            }
+            name='Main'
+            component={MainTab}
           />
-          <Tab.Screen
-            options={{
-              title: 'Bạn bè',
-              tabBarIcon: ({ color: color }) => <FontAwesome5 name="user-friends" size={21} color={color} />,
-            }}
-            name="Friends"
-            component={ContactScreen}
-          />
-          <Tab.Screen
-            options={{
-              title: 'Danh bạ',
-              tabBarIcon: ({ color: color }) => <MaterialCommunityIcons name="contacts" size={21} color={color} />,
-            }}
-            name="Contacts"
-            component={ContactScreen}
-          />
-          <Tab.Screen
-            options={{
-              title: 'Thêm',
-              tabBarIcon: ({ color: color }) => <Ionicons name="md-grid" size={21} color={color} />,
-            }}
-            name="More"
-            component={ContactScreen}
-          />
-        </Tab.Navigator>
+        </Stack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>
   );
@@ -86,15 +80,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  tabBarLabel: {
-    textTransform: 'capitalize',
-    margin: 3,
-    fontSize: responsiveFontSize(1.6),
-  },
-  tabBarIcon: {
-    width: 'auto',
-    padding: 0,
-    marginTop: 4,
   },
 });
