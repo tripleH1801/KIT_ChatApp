@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableHighlight } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { responsiveFontSize, responsiveHeight } from 'react-native-responsive-dimensions';
 import {
@@ -12,10 +12,17 @@ import ContactScreen from './ContactScreen';
 import MainScreen from './MainScreen';
 import ListFriendsScreen from './ListFriendsScreen';
 import MoreScreen from './MoreScreen';
+import { useNavigation } from '@react-navigation/core';
+import HeaderSearchBar from './HeaderSearchBar';
 
 const Tab = createBottomTabNavigator();
-
 const MainTab = () => {
+
+    const navigation = useNavigation();
+    const goToProfile = () => {
+        navigation.navigate('ProfileUserScreen')
+    }
+
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -30,24 +37,29 @@ const MainTab = () => {
         >
             <Tab.Screen
                 options={{
-                    title: 'Chat',
+                    title: 'Tin nhắn',
                     tabBarIcon: ({ color: color }) => <Ionicons name="chatbubble" size={21} color={color} />,
                     headerLeft: () => {
                         return (
-                            <Image
-                                source={{
-                                    uri: 'https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/225547917_1543387726011430_4693817264036487598_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=NxIAIrC0VHAAX9OqcI8&_nc_ht=scontent.fvca1-1.fna&oh=2bba06ee61238b9ab640dcef489b8e4a&oe=614ADF7E'
-                                }}
-                                style={{
-                                    width: responsiveHeight(4.5),
-                                    height: responsiveHeight(4.5),
-                                    borderRadius: responsiveHeight(5),
-                                }}
-                            />
+                            <TouchableHighlight
+                                underlayColor=" #cccccc"
+                                onPress={()=>{navigation.navigate('ProfileUserScreen')}}
+                            >
+                                <Image
+                                    source={{
+                                        uri: 'https://scontent.fvca1-1.fna.fbcdn.net/v/t1.6435-9/225547917_1543387726011430_4693817264036487598_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=NxIAIrC0VHAAX9OqcI8&_nc_ht=scontent.fvca1-1.fna&oh=2bba06ee61238b9ab640dcef489b8e4a&oe=614ADF7E'
+                                    }}
+                                    style={{
+                                        width: responsiveHeight(4.5),
+                                        height: responsiveHeight(4.5),
+                                        borderRadius: responsiveHeight(5),
+                                    }}
+                                />
+                            </TouchableHighlight>
                         )
                     },
                     headerLeftContainerStyle: {
-                      marginLeft: responsiveHeight(2),
+                        marginLeft: responsiveHeight(2),
                     },
                     tabBarLabelStyle: styles.tabBarLabel,
                     tabBarIconStyle: styles.tabBarIcon,

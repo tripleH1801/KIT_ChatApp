@@ -13,6 +13,11 @@ import RegisterScreen from './screens/RegisterScreen';
 import ProfileUserScreen from './screens/ProfileUserScreen';
 import AccountSettingScreen from './screens/AccountSettingScreen'
 import ProfileSettingScreen from './screens/ProfileSettingScreen';
+import ChatScreen from './screens/ChatScreen'
+import { theme } from './core/theme';
+import ChatLeftHeader from './components/ChatScreenHeader/ChatLeftHeader';
+import ChatRightHeader from './components/ChatScreenHeader/ChatRightHeader';
+import ChatRoomStorage from './components/ChatRoomStorage';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +34,7 @@ export default function App() {
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
         <Stack.Navigator>
+
           <Stack.Screen
             options={
               ({ navigation }) => ({
@@ -38,6 +44,7 @@ export default function App() {
             name='MainTab'
             component={MainTab}
           />
+
           <Stack.Screen
             options={
               ({ navigation }) => ({
@@ -47,6 +54,7 @@ export default function App() {
             name='LoginScreen'
             component={LoginScreen}
           />
+
           <Stack.Screen
             options={
               ({ navigation }) => ({
@@ -56,33 +64,70 @@ export default function App() {
             name='RegisterScreen'
             component={RegisterScreen}
           />
+
           <Stack.Screen
             options={
               ({ navigation }) => ({
-                title:'Thông tin cá nhân'
+                title: 'Thông tin cá nhân'
               })
             }
-            name='ProfileScreen'
+            name='ProfileUserScreen'
             component={ProfileUserScreen}
           />
+
           <Stack.Screen
             options={
               ({ navigation }) => ({
-                title:'Cài đặt tài khoản'
+                title: 'Cài đặt tài khoản'
               })
             }
             name='AccountSettingScreen'
             component={AccountSettingScreen}
           />
+
           <Stack.Screen
             options={
               ({ navigation }) => ({
-                title:'Thay đổi thông tin cá nhân'
+                title: 'Thay đổi thông tin cá nhân'
               })
             }
             name='ProfileSettingScreen'
             component={ProfileSettingScreen}
           />
+
+          <Stack.Screen
+            options={({ route }) => ({
+              title: route.params.chatRoom.users[0].name,
+              headerTitleStyle: {
+                fontWeight: '600',
+                // color: '#fff',
+              },
+              headerStyle: {
+                // backgroundColor: '#000'
+              },
+              headerLeft: () => <ChatLeftHeader otherUser={route.params.chatRoom.users[0]} />,
+              headerLeftContainerStyle: {
+                backgroundColor: 'transparent'
+              },
+              headerRight: () => <ChatRightHeader chatRoomID={route.params.chatRoom.id} />,
+              headerRightContainerStyle: {
+                backgroundColor: 'transparent'
+              },
+            })}
+            name='ChatScreen'
+            component={ChatScreen}
+          />
+
+          <Stack.Screen
+            options={
+              ({ navigation }) => ({
+                title: 'Tùy chọn'
+              })
+            }
+            name='ChatRoomStorage'
+            component={ChatRoomStorage}
+          />
+
         </Stack.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>

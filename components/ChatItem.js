@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { View, Text, Image, StyleSheet, TouchableHighlight } from 'react-native'
 import { responsiveFontSize, responsiveHeight } from "react-native-responsive-dimensions";
 import BubbleAvatar from './BubbleAvatar';
 
@@ -12,12 +11,14 @@ const ChatItem = ({chatRoom}) => {
     const anotherUser = chatRoom.users[1];
     if (anotherUser.id === 'u1')
         return null;
+
     const onPress = ()=>{
-        // navigation.navigate('ChatScreens', { chatRoom: chatRoom })
+        navigation.navigate('ChatScreen', { chatRoom: chatRoom })
     }
+
     return (
         <TouchableHighlight
-            underlayColor="#F3FBF1"
+            underlayColor=" #cccccc"
             onPress={onPress}
         >
             <View style={styles.container}> 
@@ -66,8 +67,8 @@ const styles = StyleSheet.create({
     },
     userName:{
         marginVertical: responsiveHeight(0.5),
-        fontSize: responsiveFontSize(1.8),
-        fontWeight: '500'
+        fontSize: responsiveFontSize(2),
+        fontWeight: '700'
     },
     messageWrapper:{
         flex: 1,
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start'
     },
     lastMessage:{
-        fontSize: responsiveFontSize(1.6),
+        fontSize: responsiveFontSize(1.7),
     },
     dotSpace:{
 

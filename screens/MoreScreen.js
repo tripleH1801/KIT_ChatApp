@@ -2,10 +2,10 @@ import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Avatar, Caption, Drawer, Switch, Title, TouchableRipple } from 'react-native-paper'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core'
 import { theme } from '../core/theme'
+import { responsiveFontSize } from 'react-native-responsive-dimensions';
 
 const MoreScreen = () => {
     const [isDarkTheme, setIsDarkTheme] = React.useState(false);
@@ -47,7 +47,7 @@ const MoreScreen = () => {
                                 />
                             )}
                             label='Trang cá nhân'
-                            onPress={() => { navigation.navigate('ProfileScreen') }}
+                            onPress={() => { navigation.navigate('ProfileUserScreen') }}
                         />
 
                         {/* <DrawerItem
@@ -104,15 +104,16 @@ const MoreScreen = () => {
             <Drawer.Section style={styles.bottomDrawerSection}>
                 <DrawerItem
                     icon={({ color, size }) => (
-                        <Icon
-                            name="location-exit"
+                        <Feather
+                            name="log-out"
                             color={theme.colors.error}
                             size={size}
                         />
                     )}
                     label='Đăng Xuất'
                     labelStyle={{
-                        color : theme.colors.error
+                        color: theme.colors.error,
+                        fontSize: responsiveFontSize(2)
                     }}
                     onPress={() => { navigation.navigate('LoginScreen') }}
                 />
@@ -181,8 +182,9 @@ const styles = StyleSheet.create({
 
     bottomDrawerSection: {
         marginBottom: 15,
-        borderTopColor: '#f4f4f4',
-        borderTopWidth: 1,
+        borderTopColor: '#ccc',
+        borderTopWidth: 0.2,
+        paddingTop: 4
     },
 
     preference: {

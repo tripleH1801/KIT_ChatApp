@@ -22,7 +22,7 @@ const HeaderSearchBar = () => {
 }
 const styles = StyleSheet.create({
     searchBar: {
-        backgroundColor: '#ccc',
+        backgroundColor: '#cccccc',
         borderRadius: responsiveHeight(50),
         flexDirection: 'row',
         alignItems: 'center',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         color: '#909297'
     },
     searchInput: {
-        backgroundColor: '#ccc',
+        backgroundColor: '#cccccc',
         flex: 1,
         height: responsiveHeight(5),
         marginLeft: 10,
