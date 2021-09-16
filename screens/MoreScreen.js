@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-const ChatScreen = () => {
+const MoreScreen = () => {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>chat screen!</Text>
+            <Text>More screen!</Text>
         </View>
     )
 }
 
-export default ChatScreen
+export default MoreScreen
