@@ -9,12 +9,12 @@ const Message = ({ message, index, idRoom }) => {
     const Users = [{
         id: 'u1',
         name: 'Vadim',
-        imageUri: 'https://scontent.fsgn8-1.fna.fbcdn.net/v/t1.6435-9/234811384_554925752373963_3451451666969843487_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=qaokf2cIu20AX9zUovr&_nc_ht=scontent.fsgn8-1.fna&oh=8260ec235e19b50484683cdc4bdd4abf&oe=614BAB44',
+        imageUri: 'https://nguoinoitieng.tv/images/nnt/100/0/beoj.jpg',
         status: true,
       }, {
         id: 'u2',
         name: 'Lukas',
-        imageUri: 'https://scontent.fsgn8-1.fna.fbcdn.net/v/t1.6435-9/234811384_554925752373963_3451451666969843487_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=qaokf2cIu20AX9zUovr&_nc_ht=scontent.fsgn8-1.fna&oh=8260ec235e19b50484683cdc4bdd4abf&oe=614BAB44',
+        imageUri: 'https://nguoinoitieng.tv/images/nnt/100/0/beoj.jpg',
         status: true,
       }, {
         id: 'u3',

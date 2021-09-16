@@ -97,7 +97,7 @@ export default function App() {
 
           <Stack.Screen
             options={({ route }) => ({
-              title: route.params.chatRoom.users[0].name,
+              title: route.params.chatRoom.users[1].name,
               headerTitleStyle: {
                 fontWeight: '600',
                 // color: '#fff',
@@ -105,7 +105,7 @@ export default function App() {
               headerStyle: {
                 // backgroundColor: '#000'
               },
-              headerLeft: () => <ChatLeftHeader otherUser={route.params.chatRoom.users[0]} />,
+              headerLeft: () => <ChatLeftHeader otherUser={route.params.chatRoom.users[1]} />,
               headerLeftContainerStyle: {
                 backgroundColor: 'transparent'
               },

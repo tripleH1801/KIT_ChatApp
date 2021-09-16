@@ -166,6 +166,24 @@ const listChats = [{
       content: 'Meet me at the same place',
       createdAt: '2020-09-25T15:40:00.000Z',
     },
+  }, {
+    id: '10',
+    users: [{
+      id: 'u1',
+      name: 'Vadim',
+      imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
+      status: true,
+    }, {
+      id: 'u11',
+      name: 'Elles',
+      imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/9.png',
+      status: false,
+    }],
+    lastMessage: {
+      id: 'm10',
+      content: 'Meet me at the same place',
+      createdAt: '2020-09-25T15:40:00.000Z',
+    },
   }]
 
 const ListChatRooms = () => {

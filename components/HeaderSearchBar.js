@@ -8,7 +8,7 @@ const HeaderSearchBar = () => {
     return (
         <View style={styles.searchBar}>
             <View >
-                <FontAwesome name="search" size={responsiveScreenFontSize(1.7)} color="black" style={styles.searchIcon} />
+                <FontAwesome name="search" size={responsiveScreenFontSize(2.2)} color="black" style={styles.searchIcon} />
             </View>
             <TextInput
                 style={styles.searchInput}
@@ -22,7 +22,7 @@ const HeaderSearchBar = () => {
 }
 const styles = StyleSheet.create({
     searchBar: {
-        backgroundColor: '#cccccc',
+        backgroundColor: '#e6e6e6',
         borderRadius: responsiveHeight(50),
         flexDirection: 'row',
         alignItems: 'center',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         color: '#909297'
     },
     searchInput: {
-        backgroundColor: '#cccccc',
+        backgroundColor: '#e6e6e6',
         flex: 1,
         height: responsiveHeight(5),
         marginLeft: 10,

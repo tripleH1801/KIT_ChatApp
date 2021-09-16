@@ -10,10 +10,9 @@ import {
 
 import ContactScreen from './ContactScreen';
 import MainScreen from './MainScreen';
-import ListFriendsScreen from './ListFriendsScreen';
+import GroupChatsScreen from './GroupChatsScreen';
 import MoreScreen from './MoreScreen';
 import { useNavigation } from '@react-navigation/core';
-import HeaderSearchBar from './HeaderSearchBar';
 
 const Tab = createBottomTabNavigator();
 const MainTab = () => {
@@ -27,12 +26,16 @@ const MainTab = () => {
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarActiveTintColor: '#64868E',
-                tabBarInactiveTintColor: '#cccccc',
+                tabBarInactiveTintColor: '#bdbdbd',
                 tabBarIndicator: () => null,
                 tabBarStyle: {
                     marginVertical: 0,
-                    paddingTop: 5
+                    paddingTop: 5,
+                    backgroundColor: '#F3FBF1'
                 },
+                headerStyle:{
+                    backgroundColor: '#F3FBF1'
+                }
             })}
         >
             <Tab.Screen
@@ -69,16 +72,6 @@ const MainTab = () => {
             />
             <Tab.Screen
                 options={{
-                    title: 'Bạn bè',
-                    tabBarIcon: ({ color: color }) => <FontAwesome5 name="user-friends" size={21} color={color} />,
-                    tabBarLabelStyle: styles.tabBarLabel,
-                    tabBarIconStyle: styles.tabBarIcon,
-                }}
-                name="Friends"
-                component={ListFriendsScreen}
-            />
-            <Tab.Screen
-                options={{
                     title: 'Danh bạ',
                     tabBarIcon: ({ color: color }) => <MaterialCommunityIcons name="contacts" size={21} color={color} />,
                     tabBarLabelStyle: styles.tabBarLabel,
@@ -86,6 +79,16 @@ const MainTab = () => {
                 }}
                 name="Contacts"
                 component={ContactScreen}
+            />
+            <Tab.Screen
+                options={{
+                    title: 'Nhóm',
+                    tabBarIcon: ({ color: color }) => <MaterialCommunityIcons name="account-group" size={26} color={color} />,
+                    tabBarLabelStyle: styles.tabBarLabel,
+                    tabBarIconStyle: styles.tabBarIcon,
+                }}
+                name="Group"
+                component={GroupChatsScreen}
             />
             <Tab.Screen
                 options={{

@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/core';
+import moment from 'moment';
 import React from 'react'
 import { View, Text, Image, StyleSheet, TouchableHighlight } from 'react-native'
 import { responsiveFontSize, responsiveHeight } from "react-native-responsive-dimensions";
@@ -33,8 +34,8 @@ const ChatItem = ({chatRoom}) => {
                         </Text>
                         <Text style={[styles.dotSpace, styles.text]}>.</Text>
                         <Text style={[styles.createdAt, styles.text]}>
-                            {/* {moment(chatRoom.lastMessage.createdAt).format('HH:mm')} */}
-                            cap nhat
+                            {moment(chatRoom.lastMessage.createdAt).format('HH:mm')}
+                            {/* cap nhat */}
                         </Text>
                     </View>
                 </View>
