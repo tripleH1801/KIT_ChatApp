@@ -6,10 +6,10 @@ import { responsiveHeight } from "react-native-responsive-dimensions";
 const ChatBoxExtension = ({openExtensions, isStretch, setIsChatInputFocus, setExtensionVisible}) => {
     
     const openImagePicker = ()=>{
-        console.warn('chua lam lấy hinh');
+        console.log('chua lam lấy hinh');
     }
     const openFile = ()=>{
-        console.warn('chua lam lấy file');
+        console.log('chua lam lấy file');
     }
     return (
         <View style={styles.buttonWrapper}>
@@ -22,6 +22,7 @@ const ChatBoxExtension = ({openExtensions, isStretch, setIsChatInputFocus, setEx
             >
                 <Ionicons name="md-image" size={26} color="#64868E" style={styles.icon} />
             </TouchableHighlight>
+            
             <TouchableHighlight style={styles.button}
                 underlayColor={'#98B4A6'}
                 onPress={() => {

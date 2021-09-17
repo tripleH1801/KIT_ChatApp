@@ -1,21 +1,21 @@
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { Avatar, Caption, Drawer, Switch, Title, TouchableRipple } from 'react-native-paper'
+import { Avatar, Caption, Drawer, Switch, Title, TouchableRipple, useTheme, Text as PaperText } from 'react-native-paper'
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core'
-import { theme } from '../core/theme'
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import { AuthContext } from '../context/Context';
 
 const MoreScreen = () => {
-    const [isDarkTheme, setIsDarkTheme] = React.useState(false);
+
+    const { toggleTheme } = React.useContext(AuthContext);
+    const theme = useTheme();
+
+    const { isDarkTheme, setIsDarkTheme } = React.useState(false);
     const [isUser, setIsUser] = React.useState(true)
 
     const navigation = useNavigation();
-
-    const toggleTheme = () => {
-        setIsDarkTheme(!isDarkTheme);
-    }
     return (
         <View style={styles.container}>
             <DrawerContentScrollView>
@@ -25,12 +25,12 @@ const MoreScreen = () => {
 
                         <View style={styles.user}  >
                             <Avatar.Image source={{
-                                uri: 'https://scontent.fsgn5-4.fna.fbcdn.net/v/t1.6435-9/188172010_1690075374524458_4921122626087969103_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=NxrrsfMaURcAX_aWPDS&_nc_ht=scontent.fsgn5-4.fna&oh=f02c2023e77961898669ae2ef0c0a6fc&oe=615BDD7D'
+                                uri: 'https://sothis.es/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png'
                             }}
                                 size={50} />
                             <View style={styles.userText}>
-                                <Title style={styles.title} >Trương Phước</Title>
-                                <Caption style={styles.caption} >@phuoc2k</Caption>
+                                <Title style={styles.title} >User</Title>
+                                <Caption style={styles.caption} >@User</Caption>
                             </View>
                         </View>
 
@@ -50,30 +50,6 @@ const MoreScreen = () => {
                             onPress={() => { navigation.navigate('ProfileUserScreen') }}
                         />
 
-                        {/* <DrawerItem
-                            icon={({ color, size }) => (
-                                <Icon
-                                    name="account-group-outline"
-                                    size={size}
-                                    color={theme.colors.primary}
-                                />
-                            )}
-                            label='Bạn bè'
-                            onPress={() => { }}
-                        />
-
-                        <DrawerItem
-                            icon={({ color, size }) => (
-                                <Icon
-                                    name="account-box-outline"
-                                    size={size}
-                                    color={theme.colors.primary}
-                                />
-                            )}
-                            label='Danh bạ'
-                            onPress={() => { }}
-                        /> */}
-
                         <DrawerItem
                             icon={({ color, size }) => (
                                 <Ionicons
@@ -90,9 +66,9 @@ const MoreScreen = () => {
                     <Drawer.Section title="Preferences">
                         <TouchableRipple onPress={() => { toggleTheme() }}>
                             <View style={styles.preference}>
-                                <Text>Chế độ tối</Text>
+                                <PaperText>Chế độ tối</PaperText>
                                 <View pointerEvents="none">
-                                    <Switch value={isDarkTheme} />
+                                    <Switch value={theme.dark} />
                                 </View>
                             </View>
                         </TouchableRipple>
@@ -191,7 +167,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingVertical: 12,
-        paddingHorizontal: 16
+        paddingHorizontal: 16,
+        alignItems: 'center'
     }
 
 });

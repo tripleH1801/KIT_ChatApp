@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableHighlight, StyleSheet } from 'react-native'
+import { TextInput as PaperTextInput } from 'react-native-paper';
 import { FontAwesome5, FontAwesome, Ionicons, AntDesign } from '@expo/vector-icons';
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ChatBoxExtension from './ChatBoxExtension';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 import { responsiveFontSize, responsiveHeight } from "react-native-responsive-dimensions";
 
 const ChatInput = () => {
 
+    const theme = useTheme();
     const [message, setMessage] = useState('');
     const [isChatInputFocus, setIsChatInputFocus] = useState(false);
 
@@ -52,7 +54,10 @@ const ChatInput = () => {
                 />
 
                 <View style={styles.chatBoxWrapper}>
-                    <View style={styles.chatBox}>
+                    <View style={[
+                        styles.chatBox,
+                        theme.dark ? styles.darkBackground : styles.lightBackground,
+                    ]}>
                         <TextInput
                             placeholder='Aa'
                             placeholderTextColor='#a4a7ad'
@@ -70,7 +75,7 @@ const ChatInput = () => {
                         <TouchableHighlight
                             style={styles.subButtonChatBox}
                             underlayColor={'#98B4A6'}
-                            onPress={() => { console.warn('emoji'); }}
+                            onPress={() => { console.log('emoji'); }}
                         >
                             <FontAwesome5 name="smile" size={24} color="#64868E" style={styles.subIconChatBox} />
                         </TouchableHighlight>
@@ -94,8 +99,11 @@ const ChatInput = () => {
 }
 
 const styles = StyleSheet.create({
-    text: {
-        color: 'white'
+    darkBackground: {
+        backgroundColor: '#3a3b3c',
+    },
+    lightBackground: {
+        backgroundColor: '#D1E4D1',
     },
     wrapper: {
         minHeight: responsiveHeight(6),
@@ -109,7 +117,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     container: {
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         minHeight: responsiveHeight(6),
         maxHeight: '100%',
         flexDirection: 'row',
@@ -150,7 +158,6 @@ const styles = StyleSheet.create({
         flex: 1,
         height: "100%",
         flexDirection: 'row',
-        backgroundColor: '#D1E4D1',
         borderRadius: 20,
         padding: 5,
         alignItems: 'flex-end',
@@ -161,7 +168,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 14,
         height: '100%',
         fontSize: responsiveFontSize(1.9),
-        color: '#000',
+        color: '#fff',
     },
     subButtonChatBox: {
         borderRadius: 20,

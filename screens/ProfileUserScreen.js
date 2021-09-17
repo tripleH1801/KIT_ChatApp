@@ -24,19 +24,19 @@ export default function ProfileUserScreen({ navigation }) {
                     <View style={styles.user}>
                         <Avatar.Image
                             source={{
-                                uri: 'https://scontent.fsgn5-4.fna.fbcdn.net/v/t1.6435-9/188172010_1690075374524458_4921122626087969103_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=NxrrsfMaURcAX_aWPDS&_nc_ht=scontent.fsgn5-4.fna&oh=f02c2023e77961898669ae2ef0c0a6fc&oe=615BDD7D'
+                                uri: 'https://sothis.es/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png'
                             }}
-                            size={70}
+                            size={150}
                         />
                     </View>
                     <View>
-                        <Title style={styles.title}>Trương Phước</Title>
-                        <Caption style={styles.caption}>@phuoc2k</Caption>
+                        <Title style={styles.title}>User</Title>
+                        <Caption style={styles.caption}>@User</Caption>
                     </View>
                 </View>
                 <View style={styles.row}>
                     <Icon name="calendar" color={myTheme.colors.primary} size={20} />
-                    <Text style={styles.textLocation}>17/07/2000</Text>
+                    <Text style={styles.textLocation}>dd/mm/yyyy</Text>
                 </View>
                 <View style={styles.row}>
                     <Icon name="map-marker-radius" color={myTheme.colors.primary} size={20} />
@@ -44,11 +44,11 @@ export default function ProfileUserScreen({ navigation }) {
                 </View>
                 <View style={styles.row}>
                     <Icon name="phone" color={myTheme.colors.primary} size={20} />
-                    <Text style={styles.textLocation}> 0702704302</Text>
+                    <Text style={styles.textLocation}> 0123456789</Text>
                 </View>
                 <View style={styles.row}>
                     <Icon name="email" color={myTheme.colors.primary} size={20} />
-                    <Text style={styles.textLocation}>tdphuoc77@gmail.com</Text>
+                    <Text style={styles.textLocation}>user@gmail.com</Text>
                 </View>
 
                 <View style={styles.infoBoxWrapper}>
@@ -57,7 +57,7 @@ export default function ProfileUserScreen({ navigation }) {
                             name="account-outline"
                             color={myTheme.colors.primary}
                             size={20} /> Bạn bè </Caption>
-                    <Title>14000</Title>
+                    <Title>0</Title>
                 </View>
             </View>
 
@@ -89,14 +89,12 @@ const styles = StyleSheet.create({
     },
     userInfoSection: {
         marginVertical: 20,
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center'
     },
 
     user: {
-        marginRight: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
+        marginBottom: 15
     },
     title: {
         fontSize: 24,

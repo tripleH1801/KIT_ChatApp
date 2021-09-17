@@ -1,42 +1,45 @@
 import { useNavigation } from '@react-navigation/core';
+import { useTheme } from '@react-navigation/native';
 import moment from 'moment';
-import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableHighlight } from 'react-native'
+import React from 'react';
+import { View, Text, Image, StyleSheet, TouchableHighlight } from 'react-native';
+import { Text as PaperText } from 'react-native-paper';
 import { responsiveFontSize, responsiveHeight } from "react-native-responsive-dimensions";
 import BubbleAvatar from './BubbleAvatar';
 
-const ChatItem = ({chatRoom}) => {
+const ChatItem = ({ chatRoom }) => {
 
     const navigation = useNavigation();
-    
+    const theme = useTheme();
+
     const anotherUser = chatRoom.users[1];
     if (anotherUser.id === 'u1')
         return null;
 
-    const onPress = ()=>{
+    const onPress = () => {
         navigation.navigate('ChatScreen', { chatRoom: chatRoom })
     }
 
     return (
         <TouchableHighlight
-            underlayColor=" #cccccc"
+            underlayColor={theme.dark ? "#333" : '#e6e6e6'}
             onPress={onPress}
         >
-            <View style={styles.container}> 
+            <View style={styles.container}>
                 <BubbleAvatar user={anotherUser} />
                 <View style={styles.chatContent}>
-                    <Text style={[styles.userName, styles.text]}>
+                    <PaperText style={[styles.userName]}>
                         {anotherUser.name}
-                    </Text>
+                    </PaperText>
                     <View style={styles.messageWrapper}>
-                        <Text style={[styles.lastMessage, styles.text]}>
+                        <PaperText style={[styles.lastMessage]}>
                             {chatRoom.lastMessage.content}
-                        </Text>
-                        <Text style={[styles.dotSpace, styles.text]}>.</Text>
-                        <Text style={[styles.createdAt, styles.text]}>
+                        </PaperText>
+                        <PaperText style={[styles.dotSpace, styles.text]}>.</PaperText>
+                        <PaperText style={[styles.createdAt, styles.text]}>
                             {moment(chatRoom.lastMessage.createdAt).format('HH:mm')}
                             {/* cap nhat */}
-                        </Text>
+                        </PaperText>
                     </View>
                 </View>
                 <View style={styles.seenWrapper}>
@@ -52,44 +55,41 @@ const ChatItem = ({chatRoom}) => {
     )
 }
 const styles = StyleSheet.create({
-    text:{
-        color: '#000',
-    },
-    container:{
+    container: {
         flexDirection: 'row',
         // marginHorizontal: responsiveHeight(1.2),
         padding: 9
     },
-    chatContent:{
+    chatContent: {
         flex: 1,
         marginHorizontal: responsiveHeight(1),
         flexDirection: 'column',
         justifyContent: 'center',
     },
-    userName:{
+    userName: {
         marginVertical: responsiveHeight(0.5),
         fontSize: responsiveFontSize(2),
         fontWeight: '700'
     },
-    messageWrapper:{
+    messageWrapper: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start'
     },
-    lastMessage:{
+    lastMessage: {
         fontSize: responsiveFontSize(1.7),
     },
-    dotSpace:{
+    dotSpace: {
 
     },
-    createdAt:{
+    createdAt: {
         fontSize: responsiveFontSize(1.6),
         marginLeft: 9
     },
-    seenWrapper:{
+    seenWrapper: {
         justifyContent: 'flex-end'
     },
-    seenIcon:{
+    seenIcon: {
         bottom: 0,
         right: 0,
         width: 18,

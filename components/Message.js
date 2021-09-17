@@ -1,9 +1,12 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { Text as PaperText } from 'react-native-paper';
 import { useTheme } from 'react-native-paper';
 import { responsiveFontSize } from "react-native-responsive-dimensions";
 
 const Message = ({ message, index, idRoom }) => {
+
+    const theme = useTheme();
 
     // test data
     const Users = [{
@@ -11,52 +14,52 @@ const Message = ({ message, index, idRoom }) => {
         name: 'Vadim',
         imageUri: 'https://nguoinoitieng.tv/images/nnt/100/0/beoj.jpg',
         status: true,
-      }, {
+    }, {
         id: 'u2',
         name: 'Lukas',
         imageUri: 'https://nguoinoitieng.tv/images/nnt/100/0/beoj.jpg',
         status: true,
-      }, {
+    }, {
         id: 'u3',
         name: 'Daniil',
         imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/3.jpg',
         status: true,
-      }, {
+    }, {
         id: 'u4',
         name: 'Alex',
         imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/3.png',
         status: false,
-      }, {
+    }, {
         id: 'u5',
         name: 'Vlad',
         imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/4.jpg',
         status: true,
-      }, {
+    }, {
         id: 'u6',
         name: 'Elon Musk',
         imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/5.jpg',
         status: true,
-      }, {
+    }, {
         id: 'u7',
         name: 'Adrian',
         imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/6.png',
         status: false,
-      }, {
+    }, {
         id: 'u8',
         name: 'Borja',
         imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/7.png',
         status: false,
-      }, {
+    }, {
         id: 'u9',
         name: 'Mom',
         imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/8.png',
         status: false,
-      }, {
+    }, {
         id: 'u10',
         name: 'Angelina Jolie',
         imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/9.png',
         status: false,
-      }]
+    }]
     const Chats = [
         {
             id: '1',
@@ -321,7 +324,7 @@ const Message = ({ message, index, idRoom }) => {
                 },
             }]
         },]
-    
+
     // TÌM TIN NHẮN TRC ĐÓ ĐỂ TẠO ĐƯỜNG LINE NGĂN CÁCH TIN NHẮN GIỮA 1 KHOẢNG T/G DÀI, SẴN TIỆN LÀM HIỆU ỨNG TIN NHẮN
     // lay tin nhan trc do
     // dung api lay message nằm trc, dùng biến index (đã dc truyền bên ChatScreen)
@@ -336,10 +339,10 @@ const Message = ({ message, index, idRoom }) => {
     // dung api lay message nằm sau, dùng biến index (đã dc truyền bên ChatScreen)
     const messageAfter =
         Chats.find((item) => {
-            return idRoom == item.id; 
+            return idRoom == item.id;
         })?.messages[index + 1];
     const isSameMessOFUserAfter = messageAfter?.user.id === message.user.id;
-    
+
     // ko can quan tam ==============================================================================
     // xac dinh vi tri message
     const isHeader = !isSameMessOFUserBefore && isSameMessOFUserAfter;
@@ -355,11 +358,15 @@ const Message = ({ message, index, idRoom }) => {
     if (isMyMessage) {
         return (
             <View
-                style={[isMyMessage ? styles.myContainer : styles.container,{ marginBottom: 5 }]}
+                style={[
+                    isMyMessage ? styles.myContainer : styles.container,
+                    { marginBottom: 5 }
+                ]}
             >
                 <Text style={[
                     styles.message,
                     styles.myMessage,
+                    theme.dark ? styles.myDarkMessage : styles.myLightMessage
                 ]}>
                     {message.content}
                 </Text>
@@ -372,10 +379,11 @@ const Message = ({ message, index, idRoom }) => {
     }
     else {
         return (
-            <View style={[styles.container,{ marginBottom: 5 } ]}>
+            <View style={[styles.container, { marginBottom: 5 }]}>
                 <Image source={{ uri: '' + userImgUri }} style={styles.avatar} />
                 <Text style={[
                     styles.message,
+                    theme.dark ? styles.darkMessage : styles.lightMessage
                 ]}>
                     {message.content}
                 </Text>
@@ -385,63 +393,75 @@ const Message = ({ message, index, idRoom }) => {
 }
 
 const styles = StyleSheet.create({
-    container:{
-        maxWidth: '100%', 
+    container: {
+        maxWidth: '100%',
         margin: 1,
         flexDirection: 'row',
         alignItems: 'flex-end',
         paddingLeft: 10,
     },
-    myContainer:{
-        maxWidth: '100%', 
+    myContainer: {
+        maxWidth: '100%',
         margin: 1,
         flexDirection: 'row',
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
     },
-    message:{
+    message: {
         maxWidth: '70%',
-        backgroundColor: '#e6e6e6',
+        backgroundColor: '#3a3b3c',
+        color: '#fff',
         padding: 8,
         borderRadius: 20,
-        color: '#000',
         paddingHorizontal: 18,
         fontSize: responsiveFontSize(1.7),
     },
-    myMessage:{
-        backgroundColor: '#98B4A6',
+    myLightMessage: {
+        backgroundColor: '#64868E',
         color: '#fff'
     },
-    avatar:{
+    myDarkMessage: {
+        backgroundColor: '#64868E',
+        color: '#fff',
+    },
+    lightMessage: {
+        backgroundColor: '#e6e6e6',
+        color: '#000',
+    },
+    darkMessage: {
+        backgroundColor: '#3a3b3c',
+        color: '#fff',
+    },
+    avatar: {
         width: 30,
         height: 30,
         borderRadius: 30,
         marginRight: 10,
     },
-    smallAvatar:{
+    smallAvatar: {
         width: 15,
         height: 15,
         borderRadius: 50,
         marginHorizontal: 3,
     },
-    messageHeader:{
+    messageHeader: {
         borderBottomLeftRadius: 5,
     },
-    messageCenter:{
+    messageCenter: {
         borderBottomLeftRadius: 5,
         borderTopLeftRadius: 5,
     },
-    messageFooter:{
+    messageFooter: {
         borderTopLeftRadius: 5,
     },
-    myMessageHeader:{
+    myMessageHeader: {
         borderBottomRightRadius: 5,
     },
-    myMessageCenter:{
+    myMessageCenter: {
         borderBottomRightRadius: 5,
         borderTopRightRadius: 5,
     },
-    myMessageFooter:{
+    myMessageFooter: {
         borderTopRightRadius: 5,
     },
 })

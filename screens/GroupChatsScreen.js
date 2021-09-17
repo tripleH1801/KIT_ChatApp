@@ -1,8 +1,5 @@
-import { StatusBar } from 'expo-status-bar'
 import React from 'react'
 import { View, Text, StyleSheet, LogBox } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
-import ListChatRooms from '../components/ListChatRooms'
 
 const GroupChatsScreen = () => {
     LogBox.ignoreLogs([
@@ -10,12 +7,15 @@ const GroupChatsScreen = () => {
     ])
     return (
         <View style={styles.container}>
-            <Text>LISt group chat</Text>
+            <Text style={styles.text}>LISt group chat</Text>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    text:{
+        color: '#fff'
+    },
     container: {
         flex: 1,
         justifyContent: 'center',

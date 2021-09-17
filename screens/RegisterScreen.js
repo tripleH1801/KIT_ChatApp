@@ -38,7 +38,6 @@ export default function RegisterScreen() {
 
   return (
     <Background>
-      <BackButton goBack={navigation.goBack} />
       <Text style={styles.header}> TẠO TÀI KHOẢN </Text>
       <TextInput
         label="Họ & Tên"

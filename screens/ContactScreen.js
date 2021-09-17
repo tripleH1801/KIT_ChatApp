@@ -23,8 +23,6 @@ const ContactScreen = () => {
                             phoneNumber: item.phoneNumbers[0].number ?? 'Lỗi khi đọc'
                         };
                     }))
-                    // console.log('============');
-                    // console.log(contacts[0]);
                 }
             }
             else {
@@ -55,10 +53,6 @@ const ContactScreen = () => {
                 data={contacts}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
-                    // <View>
-                    //     <Text>{item.name}</Text>
-                    //     <Text>{item.phoneNumber}</Text>
-                    // </View>
                     <ContactItem contact={item}/>
                 )}
             />

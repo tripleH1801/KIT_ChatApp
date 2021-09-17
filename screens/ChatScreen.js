@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/core'
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import ChatInput from '../components/ChatInput'
 import Message from '../components/Message'
@@ -284,9 +284,7 @@ const ChatScreen = () => {
             }]
         },]
 
-
     // lay danh sach messae tu idroom
-
     const chatMessages = databaseListMessage.find((item) => {
         return item.id === chatRoom.id;
     });
@@ -301,14 +299,14 @@ const ChatScreen = () => {
 
     return (
         <View
-            style={{ height: '100%', flexDirection: 'column', justifyContent: 'space-between' }}
+            style={styles.container}
         >
             <View
-                style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'column', backgroundColor: '#fff' }}
+                style={styles.messagesComponent}
             >
                 {messages.length <= 0 ?
                     <View
-                        style={{justifyContent: 'center', alignItems: 'center', height: '100%'}}
+                        style={{ justifyContent: 'center', alignItems: 'center', height: '100%' }}
                     >
                         <Text>Bạn chưa có tin nhắn với người này</Text>
                     </View> :
@@ -335,4 +333,16 @@ const ChatScreen = () => {
     )
 }
 
+const styles = StyleSheet.create({
+    container: {
+        height: '100%', 
+        flexDirection: 'column', 
+        justifyContent: 'space-between'
+    },
+    messagesComponent:{
+        flex: 1, 
+        justifyContent: 'space-between', 
+        flexDirection: 'column', 
+    }
+})
 export default ChatScreen
