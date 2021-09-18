@@ -22,8 +22,10 @@ import ProfileSettingScreen from './screens/ProfileSettingScreen';
 import ChatScreen from './screens/ChatScreen';
 import ChatLeftHeader from './components/ChatScreenHeader/ChatLeftHeader';
 import ChatRightHeader from './components/ChatScreenHeader/ChatRightHeader';
-import ChatRoomOptionScreen from './screens/ChatRoomOptionScreen'; 
+import ChatRoomOptionScreen from './screens/ChatRoomOptionScreen';
 import { StatusBar } from 'react-native';
+import MediaTab from './screens/MediaTab';
+import FileMediaScreen from './screens/ChatMediaScreen/FileMediaScreen';
 
 const Stack = createStackNavigator();
 
@@ -80,7 +82,7 @@ export default function App() {
           {/* <StatusBar barStyle={isDarkTheme ? 'light-content' : 'dark-content'} /> */}
           <StatusBar barStyle='light-content' />
 
-          <Stack.Navigator>
+          <Stack.Navigator initialRouteName='LoginScreen'>
 
             <Stack.Screen
               options={
@@ -173,6 +175,16 @@ export default function App() {
               }
               name='ChatRoomOptionScreen'
               component={ChatRoomOptionScreen}
+            />
+
+            <Stack.Screen
+              options={
+                ({ navigation }) => ({
+                  title: 'Kho lưu trữ'
+                })
+              }
+              name='MediaTab'
+              component={MediaTab}
             />
 
           </Stack.Navigator>

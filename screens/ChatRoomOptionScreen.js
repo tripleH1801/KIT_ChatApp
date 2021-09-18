@@ -1,22 +1,23 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
-import { Drawer, Text as PaperText } from 'react-native-paper';
+import { Dialog, Drawer, Paragraph, Portal, RadioButton, Text as PaperText } from 'react-native-paper';
 import { Avatar, Title } from 'react-native-paper';
 import { useTheme } from '@react-navigation/native';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import { useRoute } from '@react-navigation/core';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import { DrawerItem } from '@react-navigation/drawer';
 import {
-    SimpleLineIcons,
+    Feather,
     AntDesign,
     FontAwesome,
     MaterialCommunityIcons,
-    Ionicons,
     MaterialIcons,
 } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const ChatRoomOptionScreen = () => {
+
+    const navigation = useNavigation();
 
     const route = useRoute();
     const otherUser = {
@@ -27,7 +28,28 @@ const ChatRoomOptionScreen = () => {
     const optionIconColor = '#000'
     const findMessageIcon = <AntDesign name="search1" size={optionIconSize} color={optionIconColor} />;
     const userProfileIcon = <FontAwesome name="user-o" size={optionIconSize} color={optionIconColor} />;
-    const nofiIcon = <SimpleLineIcons name="bell" size={optionIconSize} color={optionIconColor} />;
+    const nofiIcon = <Feather name="bell" size={optionIconSize} color={optionIconColor} />;
+    const offNofiIcon = <Feather name="bell-off" size={optionIconSize} color={optionIconColor} />;
+
+    const [isDialogVisible, setIsDialogVisible] = React.useState(false);
+    const hideDialog = () => setIsDialogVisible(false);
+    const [valueTurnOffNofication, setValueTurnOffNofication] = React.useState('');
+
+    const findMessage = () => {
+        console.log('option find message');
+    }
+    const otherUserProfile = () => {
+        console.log('option otherUserProfile');
+    }
+    const turnOffNofi = () => {
+        if (valueTurnOffNofication === '') {
+            setIsDialogVisible(true);
+        }
+    }
+    const turOnNofi = () => {
+        setIsDialogVisible(false);
+        setValueTurnOffNofication('')
+    }
 
     return (
         <ScrollView>
@@ -54,8 +76,8 @@ const ChatRoomOptionScreen = () => {
                             'Trang cá nhân'
                         )}
                         {QuickOptionItem(
-                            turnOffNofi,
-                            nofiIcon,
+                            valueTurnOffNofication == '' ? turnOffNofi : turOnNofi,
+                            valueTurnOffNofication == '' ? nofiIcon : offNofiIcon,
                             'Tắt thông báo'
                         )}
                     </View>
@@ -66,15 +88,15 @@ const ChatRoomOptionScreen = () => {
 
                         <DrawerItem
                             icon={({ color, size }) => (
-                                <Ionicons name="md-image" size={size} color={color} />
+                                <FontAwesome name="folder-open-o" size={size} color={color} />
                             )}
-                            label='Ảnh video'
+                            label='Kho lưu trữ'
                             labelStyle={styles.drawerItemLabel}
                             style={styles.drawerItem}
-                            onPress={() => { }}
+                            onPress={() => { navigation.navigate('MediaTab', { screen: 'FileMediaScreen' }) }}
                         />
 
-                        <DrawerItem
+                        {/* <DrawerItem
                             icon={({ color, size }) => (
                                 <MaterialIcons name="attach-file" size={size} color={color} />
                             )}
@@ -92,7 +114,7 @@ const ChatRoomOptionScreen = () => {
                             labelStyle={styles.drawerItemLabel}
                             style={styles.drawerItem}
                             onPress={() => { }}
-                        />
+                        /> */}
 
                     </Drawer.Section>
 
@@ -121,7 +143,6 @@ const ChatRoomOptionScreen = () => {
                     </Drawer.Section>
 
                     <Drawer.Section title='Quyền riêng tư' >
-
                         <DrawerItem
                             icon={({ color, size }) => (
                                 <MaterialIcons name="block" size={size} color={color} />
@@ -131,8 +152,21 @@ const ChatRoomOptionScreen = () => {
                             style={styles.drawerItem}
                             onPress={() => { }}
                         />
-
                     </Drawer.Section>
+
+                    {/* dialog choose time turn off nofication */}
+                    <Portal>
+                        <Dialog visible={isDialogVisible} onDismiss={hideDialog}>
+                            <Dialog.Content >
+                                <Paragraph style={styles.dialogCheckBoxTitle}>Tắt thông báo trò chuyện?</Paragraph>
+                                <RadioButton.Group onValueChange={newValue => setValueTurnOffNofication(newValue)} value={valueTurnOffNofication}>
+                                    <RadioButton.Item label="Second item" value="second" style={styles.dialogCheckBox} />
+                                    <RadioButton.Item label="First item" value="first" style={styles.dialogCheckBox} />
+                                </RadioButton.Group>
+                            </Dialog.Content>
+                        </Dialog>
+                    </Portal>
+
                 </View>
             </View>
         </ScrollView>
@@ -161,17 +195,6 @@ const QuickOptionItem = (actionFunction, optionIcon, label) => {
         </TouchableHighlight>
     );
 }
-
-const findMessage = () => {
-    console.log('option find message');
-}
-const otherUserProfile = () => {
-    console.log('option otherUserProfile');
-}
-const turnOffNofi = () => {
-    console.log('option turnOffNofi');
-}
-
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
@@ -220,9 +243,21 @@ const styles = StyleSheet.create({
     drawerItem: {
         marginHorizontal: 20,
     },
-    drawerItemLabel:{
+    drawerItemLabel: {
         fontSize: responsiveFontSize(2),
-    }
+    },
+    dialogCheckBox: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: 5
+    },
+    dialogCheckBoxTitle: {
+        fontSize: responsiveFontSize(2.3),
+        fontWeight: '700',
+        paddingBottom: 30,
+        borderBottomColor: '#ccc',
+        borderBottomWidth: 0.2
+    },
 })
 
 export default ChatRoomOptionScreen;

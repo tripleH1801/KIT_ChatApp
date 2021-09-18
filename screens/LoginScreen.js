@@ -18,7 +18,7 @@ export default function LoginScreen() {
     const navigation = useNavigation();
 
     const onLoginPressed = () => {
-        navigation.navigate('Chat')
+        navigation.navigate('MainTab')
     }
 
     return (
