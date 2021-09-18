@@ -37,7 +37,6 @@ const MoreScreen = () => {
                     </View>
 
                     <Drawer.Section style={styles.drawerSection}>
-
                         <DrawerItem
                             icon={({ color, size }) => (
                                 <Ionicons
@@ -47,6 +46,7 @@ const MoreScreen = () => {
                                 />
                             )}
                             label='Trang cá nhân'
+                            labelStyle={styles.drawerItemLabel}
                             onPress={() => { navigation.navigate('ProfileUserScreen') }}
                         />
 
@@ -59,6 +59,7 @@ const MoreScreen = () => {
                                 />
                             )}
                             label='Cài đặt tài khoản'
+                            labelStyle={styles.drawerItemLabel}
                             onPress={() => { navigation.navigate('AccountSettingScreen') }}
                         />
                     </Drawer.Section>
@@ -66,7 +67,7 @@ const MoreScreen = () => {
                     <Drawer.Section title="Preferences">
                         <TouchableRipple onPress={() => { toggleTheme() }}>
                             <View style={styles.preference}>
-                                <PaperText>Chế độ tối</PaperText>
+                                <PaperText style={styles.drawerItemLabel}>Chế độ tối</PaperText>
                                 <View pointerEvents="none">
                                     <Switch value={theme.dark} />
                                 </View>
@@ -87,10 +88,10 @@ const MoreScreen = () => {
                         />
                     )}
                     label='Đăng Xuất'
-                    labelStyle={{
-                        color: theme.colors.error,
-                        fontSize: responsiveFontSize(2)
-                    }}
+                    labelStyle={[
+                        styles.drawerItemLabel,
+                        {color: theme.colors.error}
+                    ]}
                     onPress={() => { navigation.navigate('LoginScreen') }}
                 />
             </Drawer.Section>
@@ -154,6 +155,10 @@ const styles = StyleSheet.create({
 
     drawerSection: {
         marginTop: 15,
+    },
+
+    drawerItemLabel: {
+        fontSize: responsiveFontSize(2),
     },
 
     bottomDrawerSection: {

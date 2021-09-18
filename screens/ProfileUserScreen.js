@@ -7,11 +7,9 @@ import {
     Text,
     TouchableRipple,
 } from 'react-native-paper'
-// import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { theme } from '../core/theme';
-import { color } from 'react-native-reanimated';
 
 const myTheme = theme;
 const windowWidth = Dimensions.get("window").width;

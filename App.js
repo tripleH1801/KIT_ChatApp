@@ -4,13 +4,13 @@ import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme
 } from '@react-navigation/native';
+
 import {
   Provider as PaperProvider,
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
 } from 'react-native-paper'
 import { createStackNavigator } from '@react-navigation/stack';
-
 import { AuthContext } from './context/Context'
 
 import MainTab from './screens/MainTab';
@@ -22,7 +22,7 @@ import ProfileSettingScreen from './screens/ProfileSettingScreen';
 import ChatScreen from './screens/ChatScreen';
 import ChatLeftHeader from './components/ChatScreenHeader/ChatLeftHeader';
 import ChatRightHeader from './components/ChatScreenHeader/ChatRightHeader';
-import ChatRoomStorage from './components/ChatRoomStorage';
+import ChatRoomOptionScreen from './screens/ChatRoomOptionScreen'; 
 import { StatusBar } from 'react-native';
 
 const Stack = createStackNavigator();
@@ -62,11 +62,14 @@ export default function App() {
 
   const theme = isDarkTheme ? MyDarkTheme : MyDefaultTheme;
 
+  const [MESS_NOFICATION_COUNT, set_MESS_NOFICATION_COUNT] = React.useState(1);
+
   // lam cac ham xai chung cho tat ca cac screen
   const authContext = React.useMemo(() => ({
     toggleTheme: () => {
       setIsDarkTheme(isDarkTheme => !isDarkTheme);
-    }
+    },
+    messNoficationCount: MESS_NOFICATION_COUNT,
   }), []);
 
   return (
@@ -75,7 +78,7 @@ export default function App() {
         <NavigationContainer theme={theme}>
 
           {/* <StatusBar barStyle={isDarkTheme ? 'light-content' : 'dark-content'} /> */}
-          <StatusBar barStyle= 'light-content' />
+          <StatusBar barStyle='light-content' />
 
           <Stack.Navigator>
 
@@ -168,8 +171,8 @@ export default function App() {
                   title: 'Tùy chọn'
                 })
               }
-              name='ChatRoomStorage'
-              component={ChatRoomStorage}
+              name='ChatRoomOptionScreen'
+              component={ChatRoomOptionScreen}
             />
 
           </Stack.Navigator>

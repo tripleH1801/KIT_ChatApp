@@ -14,14 +14,16 @@ import GroupChatsScreen from './GroupChatsScreen';
 import MoreScreen from './MoreScreen';
 import { useNavigation } from '@react-navigation/core';
 import { useTheme } from '@react-navigation/native';
+import { AuthContext } from '../context/Context';
+import MessageIconNofication from '../components/TabBarIconNofication/MessageIconNofication';
 
 const Tab = createBottomTabNavigator();
 const MainTab = () => {
 
     const theme = useTheme();
+    const { messNoficationCount } = React.useContext(AuthContext);
 
     const iconSize = 23;
-    const headerTextColor = '#fff'
     const tabBarHeight = responsiveHeight(7);
 
     const navigation = useNavigation();
@@ -53,7 +55,11 @@ const MainTab = () => {
             <Tab.Screen
                 options={{
                     title: 'Tin nhắn',
-                    tabBarIcon: ({ color: color }) => <Ionicons name="chatbubble" size={iconSize} color={color} />,
+                    tabBarIcon: ({ color: color }) => {
+                        if (messNoficationCount <= 0)
+                            return <Ionicons name="chatbubble" size={iconSize} color={color} />
+                        return <MessageIconNofication iconSize={iconSize} color={color} num={messNoficationCount}/>
+                    },
                     headerLeft: () => {
                         return (
                             <TouchableHighlight

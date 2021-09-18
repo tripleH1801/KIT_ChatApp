@@ -15,7 +15,7 @@ const ChatRightHeader = ({chatRoomID}) => {
         navigation.goBack();
     }
     const openStorage =()=>{
-        navigation.navigate('ChatRoomStorage')
+        navigation.navigate('ChatRoomOptionScreen')
     }
     return (
         <View style={styles.container}>

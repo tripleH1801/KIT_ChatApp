@@ -1,6 +1,7 @@
 import { useRoute } from '@react-navigation/core'
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import { Text as PaperText } from 'react-native-paper'
 import { FlatList } from 'react-native-gesture-handler'
 import ChatInput from '../components/ChatInput'
 import Message from '../components/Message'
@@ -308,7 +309,7 @@ const ChatScreen = () => {
                     <View
                         style={{ justifyContent: 'center', alignItems: 'center', height: '100%' }}
                     >
-                        <Text>Bạn chưa có tin nhắn với người này</Text>
+                        <PaperText>Bạn chưa có tin nhắn với người này</PaperText>
                     </View> :
                     <FlatList
                         inverted //auto nằm cuối danh sách
