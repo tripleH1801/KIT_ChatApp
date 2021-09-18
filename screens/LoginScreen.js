@@ -8,17 +8,19 @@ import TextInput from '../components/TextInput'
 import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
 import { useNavigation } from '@react-navigation/core'
+import { AuthContext } from '../context/Context'
 // import { emailValidator } from '../helpers/emailValidator'
 // import { passwordValidator } from '../helpers/passwordValidator'
 
 export default function LoginScreen() {
-    const [sdt, setSdt] = useState({ value: '', error: '' })
+    const [phoneNumber, setPhoneNumber] = useState({ value: '', error: '' })
     const [password, setPassword] = useState({ value: '', error: '' })
 
     const navigation = useNavigation();
+    const { signIn } = React.useContext(AuthContext);
 
     const onLoginPressed = () => {
-        navigation.navigate('MainTab')
+        signIn(phoneNumber.value, password.value);
     }
 
     return (
@@ -29,10 +31,10 @@ export default function LoginScreen() {
             <TextInput
                 label="Số điện thoại"
                 returnKeyType="next"
-                value={sdt.value}
-                onChangeText={(text) => setSdt({ value: text, error: '' })}
-                error={!!sdt.error}
-                errorText={sdt.error}
+                value={phoneNumber.value}
+                onChangeText={(text) => setPhoneNumber({ value: text, error: '' })}
+                error={!!phoneNumber.error}
+                errorText={phoneNumber.error}
                 autoCapitalize="none"
                 autoCompleteType="email"
                 textContentType="emailAddress"

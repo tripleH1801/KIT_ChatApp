@@ -9,13 +9,13 @@ import { AuthContext } from '../context/Context';
 
 const MoreScreen = () => {
 
-    const { toggleTheme } = React.useContext(AuthContext);
-    const theme = useTheme();
-
-    const { isDarkTheme, setIsDarkTheme } = React.useState(false);
-    const [isUser, setIsUser] = React.useState(true)
-
+    const { toggleTheme, signOut } = React.useContext(AuthContext);
     const navigation = useNavigation();
+    const theme = useTheme();
+    
+    const { isDarkTheme, setIsDarkTheme } = React.useState(false);
+    const [isUser, setIsUser] = React.useState(true);
+
     return (
         <View style={styles.container}>
             <DrawerContentScrollView>
@@ -92,7 +92,7 @@ const MoreScreen = () => {
                         styles.drawerItemLabel,
                         {color: theme.colors.error}
                     ]}
-                    onPress={() => { navigation.navigate('LoginScreen') }}
+                    onPress={() => { signOut() }}
                 />
             </Drawer.Section>
         </View>

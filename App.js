@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   NavigationContainer,
   DarkTheme as NavigationDarkTheme,
@@ -10,24 +10,10 @@ import {
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
 } from 'react-native-paper'
-import { createStackNavigator } from '@react-navigation/stack';
 import { AuthContext } from './context/Context'
-
-import MainTab from './screens/MainTab';
-import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import ProfileUserScreen from './screens/ProfileUserScreen';
-import AccountSettingScreen from './screens/AccountSettingScreen'
-import ProfileSettingScreen from './screens/ProfileSettingScreen';
-import ChatScreen from './screens/ChatScreen';
-import ChatLeftHeader from './components/ChatScreenHeader/ChatLeftHeader';
-import ChatRightHeader from './components/ChatScreenHeader/ChatRightHeader';
-import ChatRoomOptionScreen from './screens/ChatRoomOptionScreen';
-import { StatusBar } from 'react-native';
-import MediaTab from './screens/MediaTab';
-import FileMediaScreen from './screens/ChatMediaScreen/FileMediaScreen';
-
-const Stack = createStackNavigator();
+import { ActivityIndicator, StatusBar, View } from 'react-native';
+import RootNavigation from './screens/RootNavigation';
+import RootAuthenication from './screens/RootAuthenication';
 
 export default function App() {
 
@@ -66,128 +52,97 @@ export default function App() {
 
   const [MESS_NOFICATION_COUNT, set_MESS_NOFICATION_COUNT] = React.useState(1);
 
+  // const [isLoading, setIsLoading] = React.useState(true);
+  // const [userToken, setUserToken] = React.useState(null);
+
+  const initLoginProps = {
+    isLoading: true,
+    userId: null,
+    userToken: null,
+  }
+  const loginReducer = (prevProps, action) => {
+    switch (action.type) {
+      case 'FIRST_GET_TOKEN':
+        return {
+          ...prevProps,
+          // userToken: action.token,
+          isLoading: false,
+        };
+      case 'LOGIN':
+        return {
+          ...prevProps,
+          userId: action.id,
+          userToken: action.token,
+          isLoading: false,
+        };
+      case 'LOGOUT':
+        return {
+          ...prevProps,
+          userId: null,
+          userToken: null,
+          isLoading: false,
+        };
+      case 'REGISTER':
+        return {
+          ...prevProps,
+          userId: action.id,
+          userToken: action.token,
+          isLoading: false,
+        };
+    }
+  }
+
+  const [loginProps, dispatch] = React.useReducer(loginReducer, initLoginProps);
+
   // lam cac ham xai chung cho tat ca cac screen
   const authContext = React.useMemo(() => ({
+    signIn: (phoneNumber, password) => {
+      let userToken = null;
+      if (phoneNumber == '123' && password == '123') {
+        userToken = 'logintoken';
+      }
+      dispatch({ type: 'LOGIN', id: '123', token: userToken })
+    },
+    signOut: () => {
+      dispatch({ type: 'LOGOUT' })
+    },
+    register: () => {
+      dispatch({ type: 'REGISTER', token: 'firsttimetoken' })
+    },
     toggleTheme: () => {
       setIsDarkTheme(isDarkTheme => !isDarkTheme);
     },
     messNoficationCount: MESS_NOFICATION_COUNT,
   }), []);
 
+  useEffect(() => {
+    let userToken;
+    userToken = null;
+    setTimeout(() => {
+      dispatch({ type: 'FIRST_GET_TOKEN', token: userToken })
+    }, 1000)
+  })
+
+  if (loginProps.isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size='large' color='gray' />
+      </View>
+    )
+  }
+
   return (
     <PaperProvider theme={theme}>
       <AuthContext.Provider value={authContext}>
         <NavigationContainer theme={theme}>
-
           {/* <StatusBar barStyle={isDarkTheme ? 'light-content' : 'dark-content'} /> */}
           <StatusBar barStyle='light-content' />
 
-          <Stack.Navigator initialRouteName='LoginScreen'>
+          {loginProps.userToken == null ?
+            (<RootAuthenication />) :
+            (<RootNavigation />)
+          }
 
-            <Stack.Screen
-              options={
-                ({ navigation }) => ({
-                  headerShown: false
-                })
-              }
-              name='MainTab'
-              component={MainTab}
-            />
-
-            <Stack.Screen
-              options={
-                ({ navigation }) => ({
-                  headerShown: false
-                })
-              }
-              name='LoginScreen'
-              component={LoginScreen}
-            />
-
-            <Stack.Screen
-              options={
-                ({ navigation }) => ({
-                  headerShown: false
-                })
-              }
-              name='RegisterScreen'
-              component={RegisterScreen}
-            />
-
-            <Stack.Screen
-              options={
-                ({ navigation }) => ({
-                  title: 'Thông tin cá nhân'
-                })
-              }
-              name='ProfileUserScreen'
-              component={ProfileUserScreen}
-            />
-
-            <Stack.Screen
-              options={
-                ({ navigation }) => ({
-                  title: 'Cài đặt tài khoản'
-                })
-              }
-              name='AccountSettingScreen'
-              component={AccountSettingScreen}
-            />
-
-            <Stack.Screen
-              options={
-                ({ navigation }) => ({
-                  title: 'Thay đổi thông tin cá nhân'
-                })
-              }
-              name='ProfileSettingScreen'
-              component={ProfileSettingScreen}
-            />
-
-            <Stack.Screen
-              options={({ route }) => ({
-                title: route.params.chatRoom.users[1].name,
-                headerTitleStyle: {
-                  fontWeight: '600',
-                  // color: '#fff',
-                },
-                headerStyle: {
-                  // backgroundColor: '#000'
-                },
-                headerLeft: () => <ChatLeftHeader otherUser={route.params.chatRoom.users[1]} />,
-                headerLeftContainerStyle: {
-                  backgroundColor: 'transparent'
-                },
-                headerRight: () => <ChatRightHeader chatRoomID={route.params.chatRoom.id} />,
-                headerRightContainerStyle: {
-                  backgroundColor: 'transparent'
-                },
-              })}
-              name='ChatScreen'
-              component={ChatScreen}
-            />
-
-            <Stack.Screen
-              options={
-                ({ navigation }) => ({
-                  title: 'Tùy chọn'
-                })
-              }
-              name='ChatRoomOptionScreen'
-              component={ChatRoomOptionScreen}
-            />
-
-            <Stack.Screen
-              options={
-                ({ navigation }) => ({
-                  title: 'Kho lưu trữ'
-                })
-              }
-              name='MediaTab'
-              component={MediaTab}
-            />
-
-          </Stack.Navigator>
         </NavigationContainer>
       </AuthContext.Provider>
     </PaperProvider>

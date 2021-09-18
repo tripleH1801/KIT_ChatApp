@@ -25,6 +25,7 @@ export default function RegisterScreen() {
     const nameError = nameValidator(name.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
+
     const passwordConfirmError = confirmPasswordValidator(password.value, passwordConfirm.value)
     if (emailError || passwordError || nameError || passwordConfirmError) {
       setName({ ...name, error: nameError })
@@ -33,7 +34,7 @@ export default function RegisterScreen() {
       setPasswordConfirm({ ...passwordConfirm, error: passwordConfirmError })
       return
     }
-    navigation.navigate('MainTab')
+    // navigation.navigate('MainTab')
   }
 
   return (
