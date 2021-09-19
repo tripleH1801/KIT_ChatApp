@@ -12,8 +12,11 @@ import {
 } from 'react-native-paper'
 import { AuthContext } from './context/Context'
 import { ActivityIndicator, StatusBar, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import RootNavigation from './screens/RootNavigation';
 import RootAuthenication from './screens/RootAuthenication';
+
 
 export default function App() {
 
@@ -57,35 +60,31 @@ export default function App() {
 
   const initLoginProps = {
     isLoading: true,
-    userId: null,
     userToken: null,
   }
   const loginReducer = (prevProps, action) => {
     switch (action.type) {
-      case 'FIRST_GET_TOKEN':
+      case 'CHECK_TOKEN':
         return {
           ...prevProps,
-          // userToken: action.token,
+          userToken: action.token,
           isLoading: false,
         };
       case 'LOGIN':
         return {
           ...prevProps,
-          userId: action.id,
           userToken: action.token,
           isLoading: false,
         };
       case 'LOGOUT':
         return {
           ...prevProps,
-          userId: null,
           userToken: null,
           isLoading: false,
         };
       case 'REGISTER':
         return {
           ...prevProps,
-          userId: action.id,
           userToken: action.token,
           isLoading: false,
         };
@@ -96,32 +95,79 @@ export default function App() {
 
   // lam cac ham xai chung cho tat ca cac screen
   const authContext = React.useMemo(() => ({
-    signIn: (phoneNumber, password) => {
+    signIn: async (phoneNumber, password) => {
       let userToken = null;
-      if (phoneNumber == '123' && password == '123') {
-        userToken = 'logintoken';
-      }
-      dispatch({ type: 'LOGIN', id: '123', token: userToken })
+
+      var options = {
+        method: 'POST',
+        headers:{
+          'Accept' : 'application/json',
+          'Content-type' : 'application/json'
+        },
+        body: JSON.stringify({
+          "phoneNumber": phoneNumber,
+          "password": password,
+        }),
+        redirect: 'follow'
+      };
+      await fetch("http://192.168.1.5:8800/api/auth/login", options)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          console.log('error',response.status);
+          return
+        })
+        .then(async result => {
+          try {
+            userToken = result.accessToken;
+            await AsyncStorage.setItem('AccessToken', userToken);
+            await AsyncStorage.setItem('UserId', result.user._id);
+            console.log(result.user._id);
+          } catch (error) {
+            console.log(error)
+          }
+        })
+        .catch(error => {
+          console.log('error', error)
+        });
+      dispatch({ type: 'LOGIN', token: userToken })
     },
-    signOut: () => {
+
+    signOut: async () => {
+      try {
+        await AsyncStorage.removeItem('AccessToken')
+        await AsyncStorage.removeItem('UserId')
+      } catch (e) {
+        console.log(e);
+      }
       dispatch({ type: 'LOGOUT' })
     },
+
     register: () => {
+      console.log('Chua thực hiện phần register');
       dispatch({ type: 'REGISTER', token: 'firsttimetoken' })
     },
+
     toggleTheme: () => {
       setIsDarkTheme(isDarkTheme => !isDarkTheme);
     },
+    
     messNoficationCount: MESS_NOFICATION_COUNT,
   }), []);
 
   useEffect(() => {
     let userToken;
     userToken = null;
-    setTimeout(() => {
-      dispatch({ type: 'FIRST_GET_TOKEN', token: userToken })
+    setTimeout(async () => {
+      try {
+        userToken = await AsyncStorage.getItem('AccessToken');
+      } catch (e) {
+        console.log(e);
+      }
+      dispatch({ type: 'CHECK_TOKEN', token: userToken })
     }, 1000)
-  })
+  }, [])
 
   if (loginProps.isLoading) {
     return (
